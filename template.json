@@ -1,0 +1,364 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "lgname": {
+            "type": "string"
+        },
+        "Appconfigname": {
+            "type": "string"
+        },
+        "fdhpsettingname": {
+            "type": "string"
+        },
+        "fdrouterulename": {
+            "type": "string"
+        },
+        "fdbackendname": {
+            "type": "string"
+        },
+        "fdfrontendname": {
+            "type": "string"
+        },
+        "fdlbsettingname": {
+            "type": "string"
+        },
+        "frontdoorname": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "fdlocation": {
+            "type": "string"
+        },
+        "lgsku": {
+            "type": "string"
+        },
+        "appconfigsku": {
+            "type": "string"
+        },
+        "resourcetags": {
+            "type": "object"
+        },
+        "Appinsightname": {
+            "type": "string"
+        },
+        "Appinsighttype": {
+            "type": "string"
+        },
+
+        "requestSource": {
+            "type": "string"
+        },
+
+
+        "kvname": {
+            "type": "string"
+        },
+
+        "kvsku": {
+            "type": "string"
+        },
+        "accessPolicies": {
+            "type": "array"
+        },
+        "tenant": {
+            "type": "string"
+        },
+        "enabledForDeployment": {
+            "type": "bool"
+        },
+        "enabledForTemplateDeployment": {
+            "type": "bool"
+        },
+        "enabledForDiskEncryption": {
+            "type": "bool"
+        },
+        "enableRbacAuthorization": {
+            "type": "bool"
+        },
+        "enableSoftDelete": {
+            "type": "bool"
+        },
+        "softDeleteRetentionInDays": {
+            "type": "int"
+        },
+        "networkAcls": {
+            "type": "object"
+        },
+        "subscriptionId": {
+            "type": "string"
+        },
+        "webappname": {
+            "type": "string"
+        },
+
+        "hostingPlanName": {
+            "type": "string"
+        },
+        "ResourceGroup": {
+            "type": "string"
+        },
+        "alwaysOn": {
+            "type": "bool"
+        },
+        "webappsku": {
+            "type": "string"
+        },
+        "webappskuCode": {
+            "type": "string"
+        },
+        "workerSize": {
+            "type": "string"
+        },
+        "workerSizeId": {
+            "type": "string"
+        },
+        "numberOfWorkers": {
+            "type": "string"
+        },
+        "currentStack": {
+            "type": "string"
+        },
+        "phpVersion": {
+            "type": "string"
+        },
+        "netFrameworkVersion": {
+            "type": "string"
+        }
+    },
+    "variables": {
+
+        "workspaceResourceId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('ResourceGroup'),'/providers/microsoft.operationalinsights/workspaces/', parameters('lgname'))]",
+        "frontdoorResID": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('ResourceGroup'),'/providers/Microsoft.Network/frontdoors/',parameters('frontdoorname'))]"
+    },
+
+    "resources": [
+
+    
+        {
+            "apiVersion": "2021-06-01",
+            "name": "[parameters('lgname')]",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('resourcetags')]",
+            "type": "Microsoft.OperationalInsights/workspaces",
+            "properties": {
+                "sku": {
+                    "name": "[parameters('lgsku')]"
+                }
+            }
+        },
+        {
+            "name": "[parameters('Appinsightname')]",
+            "type": "microsoft.insights/components",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('resourcetags')]",
+            "apiVersion": "2020-02-02",
+            "dependsOn": [],
+            "properties": {
+                "ApplicationId": "[parameters('Appinsightname')]",
+                "Application_Type": "[parameters('Appinsighttype')]",
+                "Flow_Type": "Redfield",
+                "Request_Source": "[parameters('requestSource')]",
+                "WorkspaceResourceId": "[variables('workspaceResourceId')]"
+            }
+
+        },
+        {
+            "type": "Microsoft.AppConfiguration/configurationStores",
+            "apiVersion": "2021-03-01-preview",
+            "name": "[parameters('Appconfigname')]",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('resourcetags')]",
+            "sku": {
+                "name": "[parameters('appconfigsku')]"
+            },
+            "properties": {
+                "encryption": {},
+                "disableLocalAuth": false
+            }
+        },
+        {
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('kvname')]",
+            "location": "[parameters('location')]",
+            "type": "Microsoft.KeyVault/vaults",
+            "properties": {
+                "enabledForDeployment": "[parameters('enabledForDeployment')]",
+                "enabledForTemplateDeployment": "[parameters('enabledForTemplateDeployment')]",
+                "enabledForDiskEncryption": "[parameters('enabledForDiskEncryption')]",
+                "enableRbacAuthorization": "[parameters('enableRbacAuthorization')]",
+                "accessPolicies": "[parameters('accessPolicies')]",
+                "tenantId": "[parameters('tenant')]",
+                "sku": {
+                    "name": "[parameters('kvsku')]",
+                    "family": "A"
+                },
+                "enableSoftDelete": "[parameters('enableSoftDelete')]",
+                "softDeleteRetentionInDays": "[parameters('softDeleteRetentionInDays')]",
+                "networkAcls": "[parameters('networkAcls')]"
+            },
+            "tags": "[parameters('resourcetags')]",
+            "dependsOn": []
+        },
+        {
+            "apiVersion": "2018-11-01",
+            "name": "[parameters('webappname')]",
+            "type": "Microsoft.Web/sites",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('resourcetags')]",
+            "dependsOn": [
+                "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
+            ],
+            "properties": {
+                "name": "[parameters('webappname')]",
+                "siteConfig": {
+                    "appSettings": [],
+                    "metadata": [
+                        {
+                            "name": "CURRENT_STACK",
+                            "value": "[parameters('currentStack')]"
+                        }
+                    ],
+                    "phpVersion": "[parameters('phpVersion')]",
+                    "netFrameworkVersion": "[parameters('netFrameworkVersion')]",
+                    "alwaysOn": "[parameters('alwaysOn')]"
+                },
+                "serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('ResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+                "clientAffinityEnabled": true
+            }
+        },
+        {
+            "apiVersion": "2018-11-01",
+            "name": "[parameters('hostingPlanName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[parameters('location')]",
+            "kind": "",
+            "tags": "[parameters('resourcetags')]",
+            "dependsOn": [],
+            "properties": {
+                "name": "[parameters('hostingPlanName')]",
+                "workerSize": "[parameters('workerSize')]",
+                "workerSizeId": "[parameters('workerSizeId')]",
+                "numberOfWorkers": "[parameters('numberOfWorkers')]"
+            },
+            "sku": {
+                "Tier": "[parameters('webappsku')]",
+                "Name": "[parameters('webappskuCode')]"
+            }
+        },
+        {
+            "apiVersion": "2020-05-01",
+            "type": "Microsoft.Network/frontdoors",
+            "name": "[parameters('frontdoorName')]",
+            "location": "[parameters('fdlocation')]",
+            "tags": "[parameters('resourcetags')]",
+            "properties": {
+                "frontdoorId": "[variables('frontdoorResID')]",
+                "friendlyName": "[parameters('frontdoorName')]",
+                "enabledState": "Enabled",
+                "healthProbeSettings": [
+                    {
+                        "name": "[parameters('fdhpsettingname')]",
+                        "properties": {
+                            "path": "/",
+                            "protocol": "Https",
+                            "intervalInSeconds": 30,
+                            "healthProbeMethod": "Head",
+                            "enabledState": "Enabled"
+                        },
+                        "id": "[concat(variables('frontdoorResID'),'/healthProbeSettings/',parameters('fdhpsettingname'))]"
+                    }
+                ],
+                "loadBalancingSettings": [
+                    {
+                        "name": "[parameters('fdlbsettingname')]",
+                        "properties": {
+                            "sampleSize": 4,
+                            "successfulSamplesRequired": 2,
+                            "additionalLatencyMilliseconds": 0
+                        },
+                        "id": "[concat(variables('frontdoorResID'),'/loadBalancingSettings/',parameters('fdlbsettingname'))]"
+                    }
+                ],
+                "frontendEndpoints": [
+                    {
+                        "name": "[parameters('fdfrontendname')]",
+                        "properties": {
+                            "hostName": "[concat(parameters('frontdoorname'),'.azurefd.net')]",
+                            "sessionAffinityEnabledState": "Disabled",
+                            "sessionAffinityTtlSeconds": 0,
+                            "webApplicationFirewallPolicyLink": null,
+                            "customHttpsConfiguration": null
+                        },
+                        "id": "[concat(variables('frontdoorResID'),'/frontendEndpoints/',concat(parameters('frontdoorname'),'-azurefd-net'))]"
+                    }
+                ],
+                "backendPools": [
+                    {
+                        "name": "[parameters('fdbackendname')]",
+                        "properties": {
+                            "backends": [
+                                {
+                                    "address": "[concat(parameters('Appconfigname'),'.azurewebsites.net')]",
+                                    "privateLinkResourceId": null,
+                                    "privateLinkLocation": null,
+                                    "privateEndpointStatus": null,
+                                    "privateLinkApprovalMessage": null,
+                                    "enabledState": "Enabled",
+                                    "httpPort": 80,
+                                    "httpsPort": 443,
+                                    "priority": 1,
+                                    "weight": 50,
+                                    "backendHostHeader": "[concat(parameters('Appconfigname'),'.azurewebsites.net')]"
+                                }
+                            ],
+                            "loadBalancingSettings": {
+                                "id": "[concat(variables('frontdoorResID'),'/loadBalancingSettings/',parameters('fdlbsettingname'))]"
+                            },
+                            "healthProbeSettings": {
+                                "id": "[concat(variables('frontdoorResID'),'/healthProbeSettings/',parameters('fdhpsettingname'))]"
+                            }
+                        },
+                        "id": "[concat(variables('frontdoorResID'),'/backendPools/',parameters('fdbackendname'))]"
+                    }
+                ],
+                "routingRules": [
+                    {
+                        "name": "[parameters('fdrouterulename')]",
+                        "properties": {
+                            "frontendEndpoints": [
+                                {
+                                    "id": "[concat(variables('frontdoorResID'),'/frontendEndpoints/',concat(parameters('frontdoorname'),'-azurefd-net'))]"
+                                }
+                            ],
+                            "acceptedProtocols": [
+                                "Http",
+                                "Https"
+                            ],
+                            "patternsToMatch": [
+                                "/*"
+                            ],
+                            "enabledState": "Enabled",
+                            "routeConfiguration": {
+                                "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration",
+                                "customForwardingPath": null,
+                                "forwardingProtocol": "HttpsOnly",
+                                "backendPool": {
+                                    "id": "[concat(variables('frontdoorResID'),'/backendPools/',parameters('fdbackendname'))]"
+                                },
+                                "cacheConfiguration": null
+                            }
+                        },
+                        "id": "[concat(variables('frontdoorResID'),'/routingRules/',parameters('fdrouterulename'))]"
+                    }
+                ],
+                "backendPoolsSettings": {
+                    "enforceCertificateNameCheck": "Enabled",
+                    "sendRecvTimeoutSeconds": 30
+                }
+            }
+        }
+    ]
+}

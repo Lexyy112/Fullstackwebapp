@@ -1,0 +1,187 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "lgname": {
+            "value": "shahrad-log-uk-001"
+        },
+        "appconfigname": {
+            "value": "shahrad-app-uk-001"
+        },
+        "frontdoorname": {
+            "value": "shahrad-frontdoor-uk-001"
+        },
+        "fdhpsettingname": {
+            "value": "shahrad-hps-uk-001"
+        },
+        "fdrouterulename": {
+            "value": "shahrad-rrule-uk-001"
+        },
+        "fdbackendname": {
+            "value": "shahrad-backend-uk-001"
+        },
+        "fdfrontendname": {
+            "value": "shahrad-frontdoor-uk-001-azurefd-net"
+        },
+        "fdlbsettingname": {
+            "value": "shahrad-lbs-uk-001"
+        },
+        "location": {
+            "value": "uksouth"
+        },
+        "fdlocation": {
+            "value": "Global"
+        },
+        "lgsku": {
+            "value": "pergb2018"
+        },
+        "appconfigsku": {
+            "value": "standard"
+        },
+        "resourcetags": {
+            "value": {
+                "Owner1": "Sunday",
+                "Owner2": "Lewis"
+            }
+        },
+        "Appinsighttype": {
+            "value": "web"
+        },
+        "Appinsightname": {
+            "value": "shahrad-app-uk-001"
+        },
+      
+     
+        "requestSource": {
+            "value": "IbizaAIExtension"
+        },
+       
+        "kvname": {
+            "value": "shahrad-key-uk-001"
+        },
+     
+        "kvsku": {
+            "value": "Standard"
+        },
+        "accessPolicies": {
+            "value": [
+                {
+                    "objectId": "3658fe17-e724-4556-bc23-c4f5a65c8da8",
+                    "tenantId": "40e5f2bd-169f-44c9-af12-d246dbabf571",
+                    "permissions": {
+                        "keys": [
+                            "Get",
+                            "List",
+                            "Update",
+                            "Create",
+                            "Import",
+                            "Delete",
+                            "Recover",
+                            "Backup",
+                            "Restore"
+                        ],
+                        "secrets": [
+                            "Get",
+                            "List",
+                            "Set",
+                            "Delete",
+                            "Recover",
+                            "Backup",
+                            "Restore"
+                        ],
+                        "certificates": [
+                            "Get",
+                            "List",
+                            "Update",
+                            "Create",
+                            "Import",
+                            "Delete",
+                            "Recover",
+                            "Backup",
+                            "Restore",
+                            "ManageContacts",
+                            "ManageIssuers",
+                            "GetIssuers",
+                            "ListIssuers",
+                            "SetIssuers",
+                            "DeleteIssuers"
+                        ]
+                    },
+                    "applicationId": ""
+                }
+            ]
+        },
+        "tenant": {
+            "value": "40e5f2bd-169f-44c9-af12-d246dbabf571"
+        },
+        "enabledForDeployment": {
+            "value": false
+        },
+        "enabledForTemplateDeployment": {
+            "value": false
+        },
+        "enabledForDiskEncryption": {
+            "value": false
+        },
+        "enableRbacAuthorization": {
+            "value": false
+        },
+        "enableSoftDelete": {
+            "value": true
+        },
+        "softDeleteRetentionInDays": {
+            "value": 90
+        },
+        "networkAcls": {
+            "value": {
+                "defaultAction": "allow",
+                "bypass": "AzureServices",
+                "ipRules": [],
+                "virtualNetworkRules": []
+            }
+        },
+        "subscriptionId": {
+            "value": "8f54c9d1-875d-4c30-b468-ad3690c17068"
+        },
+        "webappname": {
+            "value": "shahrad-app-uk-001"
+        },
+       
+        "hostingPlanName": {
+            "value": "shahrad-asp-uk-001"
+        },
+        "ResourceGroup": {
+            "value": "rg-uks-Sundayabioye"
+        },
+        "alwaysOn": {
+            "value": true
+        },
+        "webappsku": {
+            "value": "PremiumV2"
+        },
+        "webappskuCode": {
+            "value": "P1v2"
+        },
+        "workerSize": {
+            "value": "3"
+        },
+        "workerSizeId": {
+            "value": "3"
+        },
+        "numberOfWorkers": {
+            "value": "1"
+        },
+        "currentStack": {
+            "value": "dotnet"
+        },
+        "phpVersion": {
+            "value": "OFF"
+        },
+        "netFrameworkVersion": {
+            "value": "v5.0"
+        }
+       
+    
+    }
+    
+}
