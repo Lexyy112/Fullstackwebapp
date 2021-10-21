@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "lgname": {
-            "value": "shahrad-log-uk-001"
+            "value": "shahrad-log-uks-001"
         },
         "appconfigname": {
-            "value": "shahrad-appcon-uk-001"
+            "value": "shahrad-appcon-uks-001"
         },
         "frontdoorname": {
             "value": "shahrad-frontdoor-uk-001"
@@ -15,16 +15,16 @@
             "value": "shahrad-hps-uk-001"
         },
         "fdrouterulename": {
-            "value": "shahrad-rrule-uk-001"
+            "value": "shahrad-rrule-uks-001"
         },
         "fdbackendname": {
-            "value": "shahrad-backend-uk-001"
+            "value": "shahrad-backend-uks-001"
         },
         "fdfrontendname": {
             "value": "shahrad-frontdoor-uk-001-azurefd-net"
         },
         "fdlbsettingname": {
-            "value": "shahrad-lbs-uk-001"
+            "value": "shahrad-lbs-uks-001"
         },
         "location": {
             "value": "uksouth"
@@ -48,7 +48,7 @@
             "value": "web"
         },
         "Appinsightname": {
-            "value": "shahrad-app-uk-001"
+            "value": "shahrad-app-uks-001"
         },
       
      
@@ -57,7 +57,7 @@
         },
        
         "kvname": {
-            "value": "shahrad-key-uk-001"
+            "value": "shahrad-keyvault-uks-001"
         },
      
         "kvsku": {
@@ -144,11 +144,11 @@
             "value": "8f54c9d1-875d-4c30-b468-ad3690c17068"
         },
         "webappname": {
-            "value": "shahrad-app-uk-001"
+            "value": "shahrad-webapp-uks-001"
         },
        
         "hostingPlanName": {
-            "value": "shahrad-asp-uk-001"
+            "value": "shahrad-asp-uks-001"
         },
         "ResourceGroup": {
             "value": "rg-Shahrad-frontend-uks"
